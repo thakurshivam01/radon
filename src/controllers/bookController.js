@@ -1,6 +1,7 @@
 const BookModel = require("../models/bookModel.js")
 const AuthorModel=require("../models/authormodel")
-const res = require("express/lib/response")
+const bookModel = require("../models/bookModel.js")
+// const res = require("express/lib/response")
 
 let createAuthor= async(req, res)=>{
     let data = req.body
@@ -25,9 +26,16 @@ let authorofBook=async(req,res)=>{
     let price=data.prices
     res.send({ msg:AuthorData,price })
 }
-let bookbetween50_100=async(req,res)=>{
+const priceBook = async function (req, res) {
+    let book = await BookModel.find({ price: { $gt: 49, $lt: 101 } }).select({
+      author_id: 1,
+      id: 0,
+    });
+    let Author1=await AuthorModel.find({$or:book}).select({author_id:1,id:0});
+    res.send(Author1)
+  };
+  
 
-}
 
 
 module.exports.createAuthor = createAuthor

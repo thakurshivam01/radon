@@ -1,9 +1,9 @@
-const { Router } = require("express")
-const { route } = require("express/lib/application")
-const BookController=require("../models/authormodel")
-const BookController=require("../models/bookModel")
+const express = require("express")
+// const { router } = require("express/lib/application")
+const router = express.Router();
 
-
+const BookController=require("../controllers/bookController")
+// const BookController1=require("../models/bookModel")
 
 
 router.post("/createAuthor", BookController.createAuthor)

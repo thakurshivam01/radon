@@ -1,7 +1,7 @@
-const { default: mongoose } = require("mongoose");
-const { schema } = require("./userModel");
+const mongoose = require("mongoose");
+// const { schema } = require("./");
 
-const authorSchema=new mongoose.schema({
+const authorSchema=new mongoose.Schema({
     author_id:{
         type:String,
         unique:true,
