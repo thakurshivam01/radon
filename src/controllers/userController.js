@@ -115,8 +115,27 @@ const postMessage = async function (req, res) {
     return res.send({status: true, data: updatedUser})
 }
 
+const deleteUser = async function (req,res){
+  let token = req.headers["x-Auth-token"];
+  if(!token) token = req.headers["x-auth-token"];
+  if(!token) return res.send({status: flase, msg:"token must be present"});
+  let decodedToken = jwt.verify(token, "functionup-radon");
+  if (!decodedToken)
+  return res.send({status: false, msg:"token is invalid"});
+  let userId = req.params.userId;
+  let user = await userModel.findById(userId);
+  if(!user) {
+    return res.send("No such user exists"); 
+  }
+  await userModel.findOneAndUpdate({_id:userId}, {$set:{isDeleted: true}})
+  res.send("The User is Deleted")
+  
+  }
+  
+
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
 module.exports.postMessage = postMessage
+module.exports.deleteUser = deleteUser
